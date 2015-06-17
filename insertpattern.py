@@ -19,11 +19,12 @@
 
 import sys
 import brother
-import Image
+from PIL import Image
 import array
 
 # import convenience functions from brother module
-from brother import roundeven, roundfour, roundeight, nibblesPerRow, bytesPerPattern, bytesForMemo, methodWithPointers
+from brother import roundeven, roundfour, roundeight, nibblesPerRow
+from brother import bytesPerPattern, bytesForMemo, methodWithPointers
 
 TheImage = None
 
@@ -34,7 +35,7 @@ class PatternInserter:
         self.printInfoCallback = self.printInfo
         self.printErrorCallback = self.printError
         self.printPatternCallback = self.printPattern
-        
+
     def printInfo(self, printMsg):
         print printMsg
 
