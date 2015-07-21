@@ -20,7 +20,7 @@
 import sys
 import brother
 from PIL import Image
-# import array
+from array import array
 
 # import convenience functions from brother module
 # from brother import roundeven, roundfour, roundeight, nibblesPerRow, bytesPerPattern, bytesForMemo, methodWithPointers
@@ -104,33 +104,34 @@ class PatternInserter:
         for r in range(height):
             row = []  # we'll chunk in bits and then put em into nibbles
             for s in range(width):
-                x = s if methodWithPointers else width - s - 1
-                value = TheImage.getpixel((x, height - r - 1))
+                x = s if methodWithPointers else width-s-1
+                value = TheImage.getpixel((x,height-r-1))
                 isBlack = (value == 0) if methodWithPointers else (value != 0)
                 if (isBlack):
                     row.append(1)
                 else:
                     row.append(0)
-            # print row
+            #print row
             # turn it into nibz
             for s in range(roundfour(width) / 4):
                 n = 0
                 for nibs in range(4):
-                    # print "row size = ", len(row), "index = ",s*4+nibs
+                    #print "row size = ", len(row), "index = ",s*4+nibs
 
-                    if (len(row) == (s * 4 + nibs)):
-                        break  # padding!
-
-                    if (row[s * 4 + nibs]):
+                    if (len(row) == (s*4+nibs)):
+                        break       # padding!
+                    
+                    if (row[s*4 + nibs]):
                         n |= 1 << nibs
                 pattmemnibs.append(n)
-                # print hex(n),
+                #print hex(n),
+
 
         if (len(pattmemnibs) % 2):
             # odd nibbles, buffer to a byte
             pattmemnibs.append(0x0)
 
-        # print len(pattmemnibs), "nibbles of data"
+        #print len(pattmemnibs), "nibbles of data"
 
         # turn into bytes
         pattmem = []
